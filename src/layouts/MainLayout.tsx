@@ -129,7 +129,7 @@ const MainLayout: React.FC = () => {
             </div>
             {!isDesktopCollapsed && (
               <div className="flex flex-col whitespace-nowrap animate-fadeIn">
-                <span className="text-xl font-bold text-white tracking-tight">CRM PWA</span>
+                <span className="text-xl font-bold text-white tracking-tight">Maxsus</span>
                 <span className="text-xs text-slate-400 font-medium">Biznesingiz nazoratda</span>
               </div>
             )}
