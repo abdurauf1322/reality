@@ -10,6 +10,15 @@
     <link rel="mask-icon" href="/mask-icon.svg" color="#2563eb" />
     <link rel="manifest" href="/manifest.webmanifest" />
     <title>CRM PWA</title>
+    <script>
+      window.deferredPrompt = null;
+      window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        window.deferredPrompt = e;
+        // Optionally dispatch a custom event so React can catch it if it mounts later
+        window.dispatchEvent(new Event('pwa-install-available'));
+      });
+    </script>
   </head>
   <body>
     <div id="root"></div>

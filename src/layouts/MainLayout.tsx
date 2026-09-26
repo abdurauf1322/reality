@@ -14,6 +14,12 @@ const MainLayout: React.FC = () => {
   const [isInstallable, setIsInstallable] = useState(false);
 
   useEffect(() => {
+    // Check if the event was already fired before React mounted
+    if ((window as any).deferredPrompt) {
+      setDeferredPrompt((window as any).deferredPrompt);
+      setIsInstallable(true);
+    }
+
     const handleBeforeInstallPrompt = (e: any) => {
       e.preventDefault();
       setDeferredPrompt(e);
@@ -23,9 +29,16 @@ const MainLayout: React.FC = () => {
     const handleAppInstalled = () => {
       setIsInstallable(false);
       setDeferredPrompt(null);
+      (window as any).deferredPrompt = null;
     };
 
     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    window.addEventListener('pwa-install-available', () => {
+      if ((window as any).deferredPrompt) {
+        setDeferredPrompt((window as any).deferredPrompt);
+        setIsInstallable(true);
+      }
+    });
     window.addEventListener('appinstalled', handleAppInstalled);
 
     return () => {
@@ -35,7 +48,10 @@ const MainLayout: React.FC = () => {
   }, []);
 
   const handleInstallClick = async () => {
-    if (!deferredPrompt) return;
+    if (!deferredPrompt) {
+      alert("Ilova allaqachon o'rnatilgan yoki brauzeringiz PWA o'rnatishni qo'llab-quvvatlamaydi (Buning uchun Chrome/Edge/Safari dasturidan foydalaning va ilovani o'rnatmaganingizga ishonch hosil qiling).");
+      return;
+    }
     deferredPrompt.prompt();
     const { outcome } = await deferredPrompt.userChoice;
     if (outcome === 'accepted') {
@@ -159,6 +175,21 @@ const MainLayout: React.FC = () => {
           </ul>
         </nav>
 
+        {!isInstallable && (
+          <div className="px-4 pb-4 shrink-0">
+            <button
+              onClick={handleInstallClick}
+              className={`w-full flex items-center justify-center gap-2 bg-gradient-to-r from-slate-700 to-slate-800 text-slate-300 font-semibold py-2.5 rounded-xl shadow-lg transition-all hover:scale-[1.02] active:scale-95
+                ${isDesktopCollapsed ? 'px-0' : 'px-4'}
+              `}
+              title="Ilovani o'rnatish"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+              {!isDesktopCollapsed && <span>Ilovani o'rnatish</span>}
+            </button>
+          </div>
+        )}
+        
         {isInstallable && (
           <div className="px-4 pb-4 shrink-0">
             <button
