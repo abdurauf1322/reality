@@ -26,7 +26,13 @@ export const dashboardService = {
     const now = new Date();
     const currentMonth = now.getMonth();
     const currentYear = now.getFullYear();
-    const todayStr = now.toISOString().split('T')[0];
+    
+    const isTodayLocal = (dateIso: string) => {
+      const d = new Date(dateIso);
+      return d.getDate() === now.getDate() && 
+             d.getMonth() === now.getMonth() && 
+             d.getFullYear() === now.getFullYear();
+    };
 
     // 1. Sales
     const sales = await db.sales.orderBy('createdAt').reverse().toArray();
@@ -35,7 +41,7 @@ export const dashboardService = {
     
     for (const sale of sales) {
       const sDate = new Date(sale.createdAt);
-      if (sale.createdAt.startsWith(todayStr)) {
+      if (isTodayLocal(sale.createdAt)) {
         todaySales += sale.total;
       }
       if (sDate.getMonth() === currentMonth && sDate.getFullYear() === currentYear) {
@@ -64,7 +70,7 @@ export const dashboardService = {
 
     for (const exp of expenses) {
       const eDate = new Date(exp.date);
-      if (exp.date.startsWith(todayStr)) {
+      if (isTodayLocal(exp.date)) {
         todayExpenses += exp.amount;
       }
       if (eDate.getMonth() === currentMonth && eDate.getFullYear() === currentYear) {

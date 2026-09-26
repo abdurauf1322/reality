@@ -69,10 +69,14 @@ export const reportService = {
   // Helper to filter dates (inclusive of start and end days)
   isBetween(dateIso: string, start: string, end: string) {
     const d = new Date(dateIso).getTime();
-    const s = new Date(start).getTime();
     
-    const eDate = new Date(end);
-    eDate.setHours(23, 59, 59, 999);
+    // Parse 'YYYY-MM-DD' as local time
+    const [sYear, sMonth, sDay] = start.split('-').map(Number);
+    const sDate = new Date(sYear, sMonth - 1, sDay, 0, 0, 0, 0);
+    const s = sDate.getTime();
+    
+    const [eYear, eMonth, eDay] = end.split('-').map(Number);
+    const eDate = new Date(eYear, eMonth - 1, eDay, 23, 59, 59, 999);
     const e = eDate.getTime();
     
     return d >= s && d <= e;
