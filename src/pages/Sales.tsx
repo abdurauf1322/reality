@@ -291,32 +291,33 @@ const Sales = () => {
                     disabled={!isAvailable}
                     className={`relative p-5 rounded-2xl border flex flex-col text-left transition-all group overflow-hidden ${
                       isAvailable 
-                        ? 'bg-white border-slate-200 hover:border-blue-300 hover:shadow-md hover:shadow-blue-500/5' 
-                        : 'bg-slate-50 border-slate-100 opacity-60 cursor-not-allowed'
+                        ? 'bg-[#ffffff] dark:bg-slate-700 border-slate-200 dark:border-slate-600 hover:border-blue-300 dark:hover:border-blue-400 hover:shadow-lg dark:shadow-none hover:-translate-y-1' 
+                        : 'bg-gray-100 dark:bg-slate-800/50 border-slate-100 dark:border-slate-700 opacity-70 cursor-not-allowed'
                     }`}
                   >
                     {/* Placeholder Icon */}
-                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 ${isAvailable ? 'bg-blue-50 text-blue-500 group-hover:scale-110 transition-transform' : 'bg-slate-200 text-slate-400'}`}>
+                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 transition-colors ${isAvailable ? 'bg-blue-50 dark:bg-blue-500/20 text-blue-500 dark:text-blue-400 group-hover:scale-110 transition-transform' : 'bg-slate-200 dark:bg-slate-800 text-slate-400 dark:text-slate-500'}`}>
                       <Package size={24} />
                     </div>
                     
-                    <h3 className="font-bold text-slate-800 leading-tight mb-1 line-clamp-2 min-h-[2.5rem]">{product.name}</h3>
+                    <h3 className="font-bold text-slate-800 dark:text-white leading-tight mb-1 line-clamp-2 min-h-[2.5rem] group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">{product.name}</h3>
                     
                     <div className="mt-auto pt-3 flex flex-col gap-1.5">
-                      <span className={`font-bold text-lg ${isAvailable ? 'text-blue-600' : 'text-slate-500'}`}>
+                      <span className={`font-bold text-lg ${isAvailable ? 'text-blue-600 dark:text-blue-400' : 'text-slate-500 dark:text-slate-500'}`}>
                         {formatPrice(product.sellingPrice)}
                       </span>
                       
                       {isAvailable ? (
-                        <span className="text-xs font-semibold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-md inline-block w-fit">
+                        <span className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 bg-[#ecfdf5] dark:bg-emerald-500/20 px-2 py-1 rounded-md inline-block w-fit">
                           Mavjud: {product.quantity} dona
                         </span>
                       ) : (
-                        <span className="text-xs font-semibold text-red-600 bg-red-50 px-2 py-1 rounded-md inline-block w-fit">
+                        <span className="text-xs font-semibold text-red-600 dark:text-red-400 bg-[#fef2f2] dark:bg-red-500/20 px-2 py-1 rounded-md inline-block w-fit">
                           Mavjud emas
                         </span>
                       )}
                     </div>
+
 
                     {isAvailable && (
                       <div className="absolute inset-0 bg-blue-600 opacity-0 group-hover:opacity-5 transition-opacity" />

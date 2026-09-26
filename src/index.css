@@ -16,3 +16,115 @@
     transform: translateY(0);
   }
 }
+
+/* Robust Dark Mode Global Overrides */
+.dark body {
+  background-color: var(--color-slate-900);
+  color: var(--color-slate-100);
+}
+
+/* Backgrounds */
+.dark .bg-white,
+.dark .sm\:bg-white,
+.dark .md\:bg-white,
+.dark .lg\:bg-white,
+.dark .xl\:bg-white,
+.dark .focus\:bg-white:focus,
+.dark .hover\:bg-white:hover,
+.dark .bg-\[\#f3f4f6\],
+.dark .bg-\[\#f8fafc\],
+.dark .bg-slate-50,
+.dark .bg-slate-100,
+.dark .bg-gray-50,
+.dark .bg-gray-100,
+.dark .bg-blue-50,
+.dark .bg-emerald-50,
+.dark .bg-red-50,
+.dark .bg-orange-50 {
+  background-color: var(--color-slate-800) !important;
+}
+
+.dark .bg-white\/80 {
+  background-color: color-mix(in oklab, var(--color-slate-800) 80%, transparent) !important;
+}
+
+.dark .bg-slate-100\/80 {
+  background-color: color-mix(in oklab, var(--color-slate-800) 80%, transparent) !important;
+}
+
+.dark .bg-slate-800\/50 {
+  background-color: var(--color-slate-700) !important;
+}
+
+/* Hover Backgrounds */
+.dark .hover\:bg-slate-100:hover,
+.dark .hover\:bg-slate-50:hover,
+.dark .hover\:bg-gray-100:hover,
+.dark .hover\:bg-gray-200:hover,
+.dark .hover\:bg-gray-50:hover {
+  background-color: var(--color-slate-700) !important;
+}
+
+/* Texts */
+.dark .text-slate-800,
+.dark .text-slate-900,
+.dark .text-gray-800,
+.dark .text-gray-900,
+.dark .text-slate-700,
+.dark .text-gray-700 {
+  color: var(--color-slate-100) !important;
+}
+
+.dark .text-slate-600,
+.dark .text-slate-500,
+.dark .text-gray-600,
+.dark .text-gray-500,
+.dark .text-slate-400 {
+  color: var(--color-slate-300) !important;
+}
+
+/* Specific colored text (keep colors but make them visible in dark mode) */
+.dark .text-blue-900, .dark .text-blue-700, .dark .text-blue-600 {
+  color: var(--color-blue-400) !important;
+}
+.dark .text-green-700, .dark .text-green-600 {
+  color: var(--color-green-400) !important;
+}
+.dark .text-red-700, .dark .text-red-600 {
+  color: var(--color-red-400) !important;
+}
+.dark .text-orange-700, .dark .text-orange-600 {
+  color: var(--color-orange-400) !important;
+}
+
+/* Borders */
+.dark .border-slate-100,
+.dark .border-slate-200,
+.dark .border-gray-100,
+.dark .border-gray-200,
+.dark .border-slate-200\/60,
+.dark .border-gray-200\/50,
+.dark .border-blue-100,
+.dark .border-red-200,
+.dark .border-emerald-200,
+.dark .border-orange-200 {
+  border-color: var(--color-slate-700) !important;
+}
+
+.dark .border-b, .dark .border-t, .dark .border-r, .dark .border-l {
+  border-color: var(--color-slate-700) !important;
+}
+
+/* Inputs and Forms */
+.dark input, 
+.dark select, 
+.dark textarea {
+  background-color: var(--color-slate-900) !important;
+  color: var(--color-slate-100) !important;
+  border-color: var(--color-slate-700) !important;
+}
+
+.dark input::placeholder,
+.dark textarea::placeholder {
+  color: var(--color-slate-400) !important;
+}

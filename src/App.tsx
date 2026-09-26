@@ -14,8 +14,18 @@ import Backup from './pages/Backup';
 import Settings from './pages/Settings';
 
 import { LockScreen } from './components/LockScreen';
+import { useEffect } from 'react';
 
 function App() {
+  useEffect(() => {
+    const isDarkMode = localStorage.getItem('theme') === 'dark';
+    if (isDarkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, []);
+
   return (
     <Router>
       <LockScreen>

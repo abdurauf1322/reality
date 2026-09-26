@@ -3,7 +3,7 @@ import { Outlet, Link, useLocation } from 'react-router-dom';
 import { 
   Menu, X, LayoutDashboard, Package, ShoppingCart, 
   Users, CreditCard, Wallet, FileText, Database, 
-  Settings, Search, Bell, Moon, ChevronDown, Activity
+  Settings, Search, Moon, Sun, ChevronDown, Activity
 } from 'lucide-react';
 
 const MainLayout: React.FC = () => {
@@ -12,6 +12,21 @@ const MainLayout: React.FC = () => {
   const location = useLocation();
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
   const [isInstallable, setIsInstallable] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    return localStorage.getItem('theme') === 'dark';
+  });
+
+  useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+    }
+  }, [isDarkMode]);
+
+  const toggleTheme = () => setIsDarkMode(!isDarkMode);
 
   useEffect(() => {
     // Check if the event was already fired before React mounted
@@ -255,15 +270,12 @@ const MainLayout: React.FC = () => {
               />
             </div>
 
-            {/* Theme Toggle (Visual only for now) */}
-            <button className="p-2.5 text-slate-500 hover:bg-slate-100 hover:text-blue-600 rounded-xl transition-all relative">
-              <Moon size={20} />
-            </button>
-
-            {/* Notifications */}
-            <button className="p-2.5 text-slate-500 hover:bg-slate-100 hover:text-blue-600 rounded-xl transition-all relative group">
-              <Bell size={20} />
-              <span className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-white"></span>
+            {/* Theme Toggle */}
+            <button 
+              onClick={toggleTheme}
+              className="p-2.5 text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-blue-600 dark:hover:text-blue-400 rounded-xl transition-all relative"
+            >
+              {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
             </button>
 
             {/* Divider */}

@@ -20,6 +20,7 @@ const Reports = () => {
   });
 
   const [dateError, setDateError] = useState('');
+  const [activeFilter, setActiveFilter] = useState<string>('thisMonth');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -75,6 +76,7 @@ const Reports = () => {
 
   // Quick Filters
   const setQuickFilter = (type: 'today' | 'yesterday' | 'thisWeek' | 'thisMonth' | 'lastMonth') => {
+    setActiveFilter(type);
     const today = new Date();
     let start = new Date();
     let end = new Date();
@@ -128,7 +130,7 @@ const Reports = () => {
               <input 
                 type="date"
                 value={startDate}
-                onChange={e => setStartDate(e.target.value)}
+                onChange={e => { setStartDate(e.target.value); setActiveFilter(''); }}
                 className="px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full sm:w-auto"
               />
             </div>
@@ -138,18 +140,32 @@ const Reports = () => {
               <input 
                 type="date"
                 value={endDate}
-                onChange={e => setEndDate(e.target.value)}
+                onChange={e => { setEndDate(e.target.value); setActiveFilter(''); }}
                 className="px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full sm:w-auto"
               />
             </div>
           </div>
 
           <div className="flex flex-wrap gap-2">
-            <button onClick={() => setQuickFilter('today')} className="px-3 py-1.5 text-sm bg-gray-100 hover:bg-gray-200 rounded-md text-gray-700 font-medium">Bugun</button>
-            <button onClick={() => setQuickFilter('yesterday')} className="px-3 py-1.5 text-sm bg-gray-100 hover:bg-gray-200 rounded-md text-gray-700 font-medium">Kecha</button>
-            <button onClick={() => setQuickFilter('thisWeek')} className="px-3 py-1.5 text-sm bg-gray-100 hover:bg-gray-200 rounded-md text-gray-700 font-medium">Shu hafta</button>
-            <button onClick={() => setQuickFilter('thisMonth')} className="px-3 py-1.5 text-sm bg-blue-100 text-blue-700 hover:bg-blue-200 rounded-md font-medium">Shu oy</button>
-            <button onClick={() => setQuickFilter('lastMonth')} className="px-3 py-1.5 text-sm bg-gray-100 hover:bg-gray-200 rounded-md text-gray-700 font-medium">O'tgan oy</button>
+            {[
+              { id: 'today', label: 'Bugun' },
+              { id: 'yesterday', label: 'Kecha' },
+              { id: 'thisWeek', label: 'Shu hafta' },
+              { id: 'thisMonth', label: 'Shu oy' },
+              { id: 'lastMonth', label: "O'tgan oy" }
+            ].map(f => (
+              <button 
+                key={f.id}
+                onClick={() => setQuickFilter(f.id as any)} 
+                className={`px-3 py-1.5 text-sm rounded-md font-medium transition-colors ${
+                  activeFilter === f.id 
+                    ? 'bg-blue-500 text-white shadow-sm hover:bg-blue-600' 
+                    : 'bg-gray-100 hover:bg-gray-200 text-gray-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700'
+                }`}
+              >
+                {f.label}
+              </button>
+            ))}
           </div>
         </div>
         {dateError && <p className="text-red-500 text-sm mt-2 font-medium">{dateError}</p>}
