@@ -131,27 +131,27 @@ const MainLayout: React.FC = () => {
 
       {/* Sidebar */}
       <aside 
-        className={`fixed lg:static inset-y-0 left-0 z-50 bg-[#0f172a] text-slate-300 flex flex-col transition-all duration-300 ease-in-out shadow-xl
+        className={`fixed lg:static inset-y-0 left-0 z-50 bg-white text-slate-700 border-r border-slate-200 flex flex-col transition-all duration-300 ease-in-out shadow-lg
           ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
           ${isDesktopCollapsed ? 'lg:w-20' : 'w-72 lg:w-72'}
         `}
       >
         {/* Sidebar Header */}
-        <div className="h-20 flex items-center px-6 border-b border-slate-800/60 shrink-0">
+        <div className="h-20 flex items-center px-6 border-b border-slate-200 shrink-0">
           <div className={`flex items-center gap-3 overflow-hidden ${isDesktopCollapsed ? 'justify-center w-full' : ''}`}>
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center text-white shrink-0 shadow-lg shadow-blue-500/20">
               <Activity size={24} />
             </div>
             {!isDesktopCollapsed && (
               <div className="flex flex-col whitespace-nowrap animate-fadeIn">
-                <span className="text-xl font-bold text-white tracking-tight">Maxsus</span>
-                <span className="text-xs text-slate-400 font-medium">Biznesingiz nazoratda</span>
+                <span className="text-xl font-bold text-slate-800 tracking-tight">Maxsus</span>
+                <span className="text-xs text-slate-500 font-medium">Biznesingiz nazoratda</span>
               </div>
             )}
           </div>
           {/* Mobile close button */}
           <button 
-            className="lg:hidden ml-auto p-2 hover:bg-slate-800 rounded-lg text-slate-400 transition-colors"
+            className="lg:hidden ml-auto p-2 hover:bg-slate-100 rounded-lg text-slate-500 transition-colors"
             onClick={closeSidebarMobile}
           >
             <X size={20} />
@@ -170,8 +170,8 @@ const MainLayout: React.FC = () => {
                     onClick={closeSidebarMobile}
                     className={`flex items-center gap-3 px-3 py-3 rounded-xl transition-all duration-200 group relative
                       ${isActive 
-                        ? 'bg-gradient-to-r from-blue-600 to-blue-500 text-white shadow-md shadow-blue-900/20' 
-                        : 'hover:bg-slate-800/50 hover:text-white text-slate-400'
+                        ? 'bg-gradient-to-r from-blue-600 to-blue-500 text-white shadow-md shadow-blue-500/20' 
+                        : 'hover:bg-slate-100 hover:text-blue-600 text-slate-600'
                       }
                       ${isDesktopCollapsed ? 'justify-center' : ''}
                     `}
@@ -194,7 +194,7 @@ const MainLayout: React.FC = () => {
           <div className="px-4 pb-4 shrink-0">
             <button
               onClick={handleInstallClick}
-              className={`w-full flex items-center justify-center gap-2 bg-gradient-to-r from-slate-700 to-slate-800 text-slate-300 font-semibold py-2.5 rounded-xl shadow-lg transition-all hover:scale-[1.02] active:scale-95
+              className={`w-full flex items-center justify-center gap-2 bg-gradient-to-r from-slate-100 to-slate-200 dark:from-slate-700 dark:to-slate-800 text-slate-700 font-semibold py-2.5 rounded-xl shadow transition-all hover:scale-[1.02] active:scale-95
                 ${isDesktopCollapsed ? 'px-0' : 'px-4'}
               `}
               title="Ilovani o'rnatish"
@@ -221,18 +221,18 @@ const MainLayout: React.FC = () => {
         )}
 
         {/* Sidebar Footer / User Profile */}
-        <div className="p-4 border-t border-slate-800/60 shrink-0">
-          <div className={`flex items-center gap-3 p-3 rounded-xl bg-slate-800/50 hover:bg-slate-800 transition-colors cursor-pointer border border-slate-700/50 ${isDesktopCollapsed ? 'justify-center' : ''}`}>
-            <div className="w-10 h-10 rounded-full bg-slate-700 border-2 border-slate-600 flex items-center justify-center shrink-0 overflow-hidden">
+        <div className="p-4 border-t border-slate-200 shrink-0">
+          <div className={`flex items-center gap-3 p-3 rounded-xl bg-slate-50 hover:bg-slate-100 transition-colors cursor-pointer border border-slate-200 ${isDesktopCollapsed ? 'justify-center' : ''}`}>
+            <div className="w-10 h-10 rounded-full bg-slate-200 border-2 border-slate-300 flex items-center justify-center shrink-0 overflow-hidden">
               <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Admin" alt="Admin" className="w-full h-full object-cover" />
             </div>
             {!isDesktopCollapsed && (
               <div className="flex-1 min-w-0 flex items-center justify-between">
                 <div className="flex flex-col truncate">
-                  <span className="text-sm font-semibold text-white truncate">Admin</span>
-                  <span className="text-xs text-blue-400 truncate">Super Admin</span>
+                  <span className="text-sm font-semibold text-slate-800 truncate">Admin</span>
+                  <span className="text-xs text-blue-500 truncate">Super Admin</span>
                 </div>
-                <ChevronDown size={16} className="text-slate-500 shrink-0" />
+                <ChevronDown size={16} className="text-slate-400 shrink-0" />
               </div>
             )}
           </div>

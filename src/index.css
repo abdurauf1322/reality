@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 
 @layer utilities {
   .animate-fadeIn {
@@ -17,114 +18,142 @@
   }
 }
 
-/* Robust Dark Mode Global Overrides */
-.dark body {
-  background-color: var(--color-slate-900);
-  color: var(--color-slate-100);
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
-/* Backgrounds */
-.dark .bg-white,
-.dark .sm\:bg-white,
-.dark .md\:bg-white,
-.dark .lg\:bg-white,
-.dark .xl\:bg-white,
-.dark .focus\:bg-white:focus,
-.dark .hover\:bg-white:hover,
-.dark .bg-\[\#f3f4f6\],
-.dark .bg-\[\#f8fafc\],
-.dark .bg-slate-50,
-.dark .bg-slate-100,
-.dark .bg-gray-50,
-.dark .bg-gray-100,
-.dark .bg-blue-50,
-.dark .bg-emerald-50,
-.dark .bg-red-50,
-.dark .bg-orange-50 {
-  background-color: var(--color-slate-800) !important;
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
 }
 
-.dark .bg-white\/80 {
-  background-color: color-mix(in oklab, var(--color-slate-800) 80%, transparent) !important;
+.animate-fadeInUp {
+  animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-.dark .bg-slate-100\/80 {
-  background-color: color-mix(in oklab, var(--color-slate-800) 80%, transparent) !important;
+.animate-shake {
+  animation: shake 0.4s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
 }
 
-.dark .bg-slate-800\/50 {
-  background-color: var(--color-slate-700) !important;
-}
+@layer base {
+  body {
+    background-color: #f8fafc; /* bg-slate-50 */
+    color: #0f172a; /* text-slate-900 */
+    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 300ms;
+  }
+  .dark body {
+    background-color: #0f172a; /* bg-slate-900 */
+    color: #f1f5f9; /* text-slate-100 */
+  }
 
-/* Hover Backgrounds */
-.dark .hover\:bg-slate-100:hover,
-.dark .hover\:bg-slate-50:hover,
-.dark .hover\:bg-gray-100:hover,
-.dark .hover\:bg-gray-200:hover,
-.dark .hover\:bg-gray-50:hover {
-  background-color: var(--color-slate-700) !important;
-}
+  /* Base dark mode overrides for existing UI that doesn't have explicit dark: classes yet */
+  /* Backgrounds */
+  .dark .bg-white:not([class*="dark:bg-"]),
+  .dark .sm\:bg-white:not([class*="dark:bg-"]),
+  .dark .md\:bg-white:not([class*="dark:bg-"]),
+  .dark .lg\:bg-white:not([class*="dark:bg-"]),
+  .dark .xl\:bg-white:not([class*="dark:bg-"]),
+  .dark .focus\:bg-white:focus:not([class*="dark:bg-"]),
+  .dark .hover\:bg-white:hover:not([class*="dark:bg-"]),
+  .dark .bg-\[\#f3f4f6\]:not([class*="dark:bg-"]),
+  .dark .bg-\[\#f8fafc\]:not([class*="dark:bg-"]),
+  .dark .bg-slate-50:not([class*="dark:bg-"]),
+  .dark .bg-slate-100:not([class*="dark:bg-"]),
+  .dark .bg-gray-50:not([class*="dark:bg-"]),
+  .dark .bg-gray-100:not([class*="dark:bg-"]),
+  .dark .bg-blue-50:not([class*="dark:bg-"]),
+  .dark .bg-emerald-50:not([class*="dark:bg-"]),
+  .dark .bg-red-50:not([class*="dark:bg-"]),
+  .dark .bg-orange-50:not([class*="dark:bg-"]) {
+    background-color: var(--color-slate-800) !important;
+  }
 
-/* Texts */
-.dark .text-slate-800,
-.dark .text-slate-900,
-.dark .text-gray-800,
-.dark .text-gray-900,
-.dark .text-slate-700,
-.dark .text-gray-700 {
-  color: var(--color-slate-100) !important;
-}
+  .dark .bg-white\/80:not([class*="dark:bg-"]),
+  .dark .bg-slate-100\/80:not([class*="dark:bg-"]) {
+    background-color: color-mix(in oklab, var(--color-slate-800) 80%, transparent) !important;
+  }
 
-.dark .text-slate-600,
-.dark .text-slate-500,
-.dark .text-gray-600,
-.dark .text-gray-500,
-.dark .text-slate-400 {
-  color: var(--color-slate-300) !important;
-}
+  .dark .bg-slate-800\/50:not([class*="dark:bg-"]) {
+    background-color: var(--color-slate-700) !important;
+  }
 
-/* Specific colored text (keep colors but make them visible in dark mode) */
-.dark .text-blue-900, .dark .text-blue-700, .dark .text-blue-600 {
-  color: var(--color-blue-400) !important;
-}
-.dark .text-green-700, .dark .text-green-600 {
-  color: var(--color-green-400) !important;
-}
-.dark .text-red-700, .dark .text-red-600 {
-  color: var(--color-red-400) !important;
-}
-.dark .text-orange-700, .dark .text-orange-600 {
-  color: var(--color-orange-400) !important;
-}
+  /* Hover Backgrounds */
+  .dark .hover\:bg-slate-100:hover:not([class*="dark:hover:bg-"]),
+  .dark .hover\:bg-slate-50:hover:not([class*="dark:hover:bg-"]),
+  .dark .hover\:bg-gray-100:hover:not([class*="dark:hover:bg-"]),
+  .dark .hover\:bg-gray-200:hover:not([class*="dark:hover:bg-"]),
+  .dark .hover\:bg-gray-50:hover:not([class*="dark:hover:bg-"]) {
+    background-color: var(--color-slate-700) !important;
+  }
 
-/* Borders */
-.dark .border-slate-100,
-.dark .border-slate-200,
-.dark .border-gray-100,
-.dark .border-gray-200,
-.dark .border-slate-200\/60,
-.dark .border-gray-200\/50,
-.dark .border-blue-100,
-.dark .border-red-200,
-.dark .border-emerald-200,
-.dark .border-orange-200 {
-  border-color: var(--color-slate-700) !important;
-}
+  /* Texts */
+  .dark .text-slate-800:not([class*="dark:text-"]),
+  .dark .text-slate-900:not([class*="dark:text-"]),
+  .dark .text-gray-800:not([class*="dark:text-"]),
+  .dark .text-gray-900:not([class*="dark:text-"]),
+  .dark .text-slate-700:not([class*="dark:text-"]),
+  .dark .text-gray-700:not([class*="dark:text-"]) {
+    color: var(--color-slate-100) !important;
+  }
 
-.dark .border-b, .dark .border-t, .dark .border-r, .dark .border-l {
-  border-color: var(--color-slate-700) !important;
-}
+  .dark .text-slate-600:not([class*="dark:text-"]),
+  .dark .text-slate-500:not([class*="dark:text-"]),
+  .dark .text-gray-600:not([class*="dark:text-"]),
+  .dark .text-gray-500:not([class*="dark:text-"]),
+  .dark .text-slate-400:not([class*="dark:text-"]) {
+    color: var(--color-slate-300) !important;
+  }
 
-/* Inputs and Forms */
-.dark input, 
-.dark select, 
-.dark textarea {
-  background-color: var(--color-slate-900) !important;
-  color: var(--color-slate-100) !important;
-  border-color: var(--color-slate-700) !important;
-}
+  /* Specific colored text */
+  .dark .text-blue-900:not([class*="dark:text-"]), .dark .text-blue-700:not([class*="dark:text-"]), .dark .text-blue-600:not([class*="dark:text-"]) {
+    color: var(--color-blue-400) !important;
+  }
+  .dark .text-green-700:not([class*="dark:text-"]), .dark .text-green-600:not([class*="dark:text-"]) {
+    color: var(--color-green-400) !important;
+  }
+  .dark .text-red-700:not([class*="dark:text-"]), .dark .text-red-600:not([class*="dark:text-"]) {
+    color: var(--color-red-400) !important;
+  }
+  .dark .text-orange-700:not([class*="dark:text-"]), .dark .text-orange-600:not([class*="dark:text-"]) {
+    color: var(--color-orange-400) !important;
+  }
 
-.dark input::placeholder,
-.dark textarea::placeholder {
-  color: var(--color-slate-400) !important;
+  /* Borders */
+  .dark .border-slate-100:not([class*="dark:border-"]),
+  .dark .border-slate-200:not([class*="dark:border-"]),
+  .dark .border-gray-100:not([class*="dark:border-"]),
+  .dark .border-gray-200:not([class*="dark:border-"]),
+  .dark .border-slate-200\/60:not([class*="dark:border-"]),
+  .dark .border-gray-200\/50:not([class*="dark:border-"]),
+  .dark .border-blue-100:not([class*="dark:border-"]),
+  .dark .border-red-200:not([class*="dark:border-"]),
+  .dark .border-emerald-200:not([class*="dark:border-"]),
+  .dark .border-orange-200:not([class*="dark:border-"]),
+  .dark .border-b:not([class*="dark:border-"]), .dark .border-t:not([class*="dark:border-"]), .dark .border-r:not([class*="dark:border-"]), .dark .border-l:not([class*="dark:border-"]) {
+    border-color: var(--color-slate-700) !important;
+  }
+
+  /* Inputs and Forms */
+  .dark input:not([class*="dark:bg-"]), 
+  .dark select:not([class*="dark:bg-"]), 
+  .dark textarea:not([class*="dark:bg-"]) {
+    background-color: var(--color-slate-900) !important;
+    color: var(--color-slate-100) !important;
+    border-color: var(--color-slate-700) !important;
+  }
+
+  .dark input::placeholder,
+  .dark textarea::placeholder {
+    color: var(--color-slate-400) !important;
+  }
 }
