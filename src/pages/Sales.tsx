@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
-import { Search, Plus, Minus, Trash2, ShoppingCart, Receipt, Package, Banknote, CreditCard, ShieldAlert, ArrowRight, User, X } from 'lucide-react';
+import { Search, Plus, Minus, Trash2, ShoppingCart, Receipt, Package, Banknote, CreditCard, ShieldAlert, User, X } from 'lucide-react';
 import { productService } from '../services/productService';
 import { saleService } from '../services/saleService';
 import { customerService } from '../services/customerService';
@@ -261,8 +261,8 @@ const Sales = () => {
               <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
               <input
                 type="text"
-                placeholder="Mahsulot nomi bo'yicha qidirish..."
-                className="w-full pl-10 pr-4 py-2.5 bg-slate-100 border-none rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:bg-white transition-all text-sm font-medium"
+                placeholder="Mahsulot qidirish..."
+                className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all text-sm font-medium"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
@@ -289,39 +289,29 @@ const Sales = () => {
                     key={product.id}
                     onClick={() => isAvailable && addToCart(product)}
                     disabled={!isAvailable}
-                    className={`relative p-5 rounded-2xl border flex flex-col text-left transition-all group overflow-hidden ${
+                    className={`relative p-4 rounded-xl border flex flex-col text-left transition-all group overflow-hidden ${
                       isAvailable 
-                        ? 'bg-[#ffffff] dark:bg-slate-700 border-slate-200 dark:border-slate-600 hover:border-blue-300 dark:hover:border-blue-400 hover:shadow-lg dark:shadow-none hover:-translate-y-1' 
-                        : 'bg-gray-100 dark:bg-slate-800/50 border-slate-100 dark:border-slate-700 opacity-70 cursor-not-allowed'
+                        ? 'bg-white border-slate-200 hover:border-blue-300 hover:shadow-md' 
+                        : 'bg-slate-50 border-slate-100 opacity-70 cursor-not-allowed'
                     }`}
                   >
-                    {/* Placeholder Icon */}
-                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 transition-colors ${isAvailable ? 'bg-blue-50 dark:bg-blue-500/20 text-blue-500 dark:text-blue-400 group-hover:scale-110 transition-transform' : 'bg-slate-200 dark:bg-slate-800 text-slate-400 dark:text-slate-500'}`}>
-                      <Package size={24} />
-                    </div>
+                    <h3 className="font-bold text-slate-800 leading-tight mb-1 line-clamp-2 min-h-[2.5rem] group-hover:text-blue-600 transition-colors">{product.name}</h3>
                     
-                    <h3 className="font-bold text-slate-800 dark:text-white leading-tight mb-1 line-clamp-2 min-h-[2.5rem] group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">{product.name}</h3>
-                    
-                    <div className="mt-auto pt-3 flex flex-col gap-1.5">
-                      <span className={`font-bold text-lg ${isAvailable ? 'text-blue-600 dark:text-blue-400' : 'text-slate-500 dark:text-slate-500'}`}>
+                    <div className="mt-auto pt-2 flex flex-col gap-1">
+                      <span className={`font-bold ${isAvailable ? 'text-blue-600' : 'text-slate-500'}`}>
                         {formatPrice(product.sellingPrice)}
                       </span>
                       
                       {isAvailable ? (
-                        <span className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 bg-[#ecfdf5] dark:bg-emerald-500/20 px-2 py-1 rounded-md inline-block w-fit">
-                          Mavjud: {product.quantity} dona
+                        <span className="text-xs font-semibold text-slate-500">
+                          Qoldiq: {product.quantity} dona
                         </span>
                       ) : (
-                        <span className="text-xs font-semibold text-red-600 dark:text-red-400 bg-[#fef2f2] dark:bg-red-500/20 px-2 py-1 rounded-md inline-block w-fit">
+                        <span className="text-xs font-semibold text-red-500">
                           Mavjud emas
                         </span>
                       )}
                     </div>
-
-
-                    {isAvailable && (
-                      <div className="absolute inset-0 bg-blue-600 opacity-0 group-hover:opacity-5 transition-opacity" />
-                    )}
                   </button>
                 );
               })}
@@ -333,10 +323,10 @@ const Sales = () => {
         <div className={`
           fixed inset-0 z-50 lg:static lg:z-auto
           ${isMobileCartOpen ? 'flex' : 'hidden lg:flex'}
-          w-full lg:w-[350px] xl:w-[420px] bg-black/50 lg:bg-transparent flex-col shrink-0 justify-end lg:justify-start transition-all
+          w-full lg:w-[320px] bg-black/50 lg:bg-transparent flex-col shrink-0 justify-end lg:justify-start transition-all
         `}>
           <div className={`
-            w-full h-[85vh] lg:h-full bg-white lg:rounded-3xl shadow-sm border-t lg:border border-slate-100 p-4 flex flex-col relative overflow-hidden rounded-t-3xl lg:rounded-t-3xl
+            w-full h-[85vh] lg:h-full bg-white lg:rounded-2xl shadow-sm border-t lg:border border-slate-200 p-4 flex flex-col relative overflow-hidden rounded-t-2xl lg:rounded-t-2xl
             transition-transform duration-300 transform
             ${isMobileCartOpen ? 'translate-y-0' : 'translate-y-full lg:translate-y-0'}
           `}>
@@ -348,81 +338,59 @@ const Sales = () => {
             <X size={20} />
           </button>
           
-          <div className="flex justify-between items-center mb-3 border-b border-slate-100 pb-3">
-            <div className="flex gap-2.5 items-center">
-              <div className="w-10 h-10 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center shrink-0">
-                <ShoppingCart size={20} />
-              </div>
-              <div className="flex flex-col justify-center">
-                <h2 className="text-base font-black text-slate-800 leading-tight">Savat</h2>
-                <p className="text-[11px] font-semibold text-slate-400">Tanlangan mahsulotlar</p>
-              </div>
-            </div>
+          <div className="flex justify-between items-center mb-2 border-b border-slate-100 pb-2">
+            <h2 className="text-lg font-bold text-slate-800">Savat</h2>
           </div>
           
           {/* Error Message Toast */}
-          <div className={`absolute top-4 left-1/2 -translate-x-1/2 w-[90%] bg-red-50 text-red-600 border border-red-100 px-3 py-2 rounded-lg shadow-lg flex items-center gap-2 transition-all duration-300 z-50 ${error ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4 pointer-events-none'}`}>
+          <div className={`absolute top-4 left-1/2 -translate-x-1/2 w-[90%] bg-red-50 text-red-600 border border-red-100 px-3 py-2 rounded-lg shadow flex items-center gap-2 transition-all duration-300 z-50 ${error ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4 pointer-events-none'}`}>
             <ShieldAlert size={16} className="shrink-0" />
             <span className="text-xs font-medium">{error}</span>
           </div>
 
           {/* Cart Items */}
-          <div className="flex-1 overflow-y-auto mb-3 custom-scrollbar pr-1.5 min-h-[100px]">
+          <div className="flex-1 overflow-y-auto mb-2 custom-scrollbar pr-1 min-h-[100px]">
             {cart.length === 0 ? (
               <div className="h-full flex flex-col items-center justify-center text-slate-400">
-                <ShoppingCart size={40} className="mb-2 text-slate-200" />
-                <p className="font-bold text-sm text-slate-500">Savat bo'sh</p>
+                <p className="font-medium text-sm text-slate-500">Savat bo'sh</p>
               </div>
             ) : (
-              <ul className="space-y-2">
+              <ul className="space-y-0 divide-y divide-slate-100">
                 {cart.map(item => (
-                  <li key={item.productId} className="bg-white border border-slate-100 shadow-[0_2px_8px_-4px_rgba(0,0,0,0.05)] rounded-xl p-3 flex flex-col gap-1.5 group hover:border-blue-100 transition-colors">
-                    <div className="flex gap-2">
-                       <div className="w-8 h-8 bg-slate-50 text-slate-400 rounded-lg flex items-center justify-center shrink-0">
-                         <Package size={16} />
+                  <li key={item.productId} className="py-2.5 flex flex-col gap-1">
+                    <div className="flex justify-between items-start">
+                       <span className="font-bold text-slate-800 text-sm">{item.productName}</span>
+                       <button 
+                         onClick={() => removeFromCart(item.productId)} 
+                         className="text-slate-300 hover:text-red-500 transition-colors"
+                       >
+                         <Trash2 size={14} />
+                       </button>
+                    </div>
+                    
+                    <div className="flex justify-between items-center mt-1">
+                       <div className="flex items-center gap-1 bg-slate-50 rounded border border-slate-200">
+                         <button 
+                           onClick={() => {
+                             if (item.quantity <= 1) removeFromCart(item.productId);
+                             else updateQuantity(item.productId, -1);
+                           }} 
+                           className="w-6 h-6 flex items-center justify-center text-slate-600 hover:bg-slate-200 transition-colors"
+                         >
+                           <Minus size={12} />
+                         </button>
+                         <span className="w-6 text-center font-bold text-slate-800 text-xs">{item.quantity}</span>
+                         <button 
+                           onClick={() => updateQuantity(item.productId, 1)} 
+                           disabled={item.quantity >= item.stockQuantity} 
+                           className="w-6 h-6 flex items-center justify-center text-slate-600 hover:bg-slate-200 transition-colors disabled:opacity-40"
+                         >
+                           <Plus size={12} />
+                         </button>
                        </div>
-                       <div className="flex-1 min-w-0">
-                          <div className="flex justify-between items-start">
-                             <span className="font-bold text-slate-800 line-clamp-1 text-[13px]">{item.productName}</span>
-                             <span className="font-semibold text-slate-500 whitespace-nowrap ml-2 text-[11px]">{formatPrice(item.price)}</span>
-                          </div>
-                          
-                          <div className="flex justify-between items-end mt-1.5">
-                             <div className="flex flex-col">
-                                <span className="font-black text-blue-600 text-[13px] leading-tight">{formatPrice(item.total)}</span>
-                                <span className="text-[9px] font-bold text-emerald-600 flex items-center bg-emerald-50 px-1 py-0.5 rounded w-fit mt-0.5">
-                                  ✓ Mavjud: {item.stockQuantity}
-                                </span>
-                             </div>
-                             
-                             <div className="flex items-center gap-1.5 shrink-0">
-                                <div className="flex items-center gap-0.5 bg-slate-50 p-0.5 rounded-lg border border-slate-200">
-                                  <button 
-                                    onClick={() => {
-                                      if (item.quantity <= 1) removeFromCart(item.productId);
-                                      else updateQuantity(item.productId, -1);
-                                    }} 
-                                    className="w-6 h-6 flex items-center justify-center text-slate-600 bg-white hover:bg-slate-100 rounded-md shadow-sm transition-colors"
-                                  >
-                                    <Minus size={12} />
-                                  </button>
-                                  <span className="w-5 text-center font-bold text-slate-800 text-xs">{item.quantity}</span>
-                                  <button 
-                                    onClick={() => updateQuantity(item.productId, 1)} 
-                                    disabled={item.quantity >= item.stockQuantity} 
-                                    className="w-6 h-6 flex items-center justify-center text-slate-600 bg-white hover:bg-slate-100 rounded-md shadow-sm transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
-                                  >
-                                    <Plus size={12} />
-                                  </button>
-                                </div>
-                                <button 
-                                  onClick={() => removeFromCart(item.productId)} 
-                                  className="text-slate-300 hover:text-red-500 hover:bg-red-50 p-1.5 rounded-lg transition-colors"
-                                >
-                                  <Trash2 size={14} />
-                                </button>
-                             </div>
-                          </div>
+                       
+                       <div className="text-right">
+                          <div className="font-bold text-blue-600 text-sm">{formatPrice(item.total)}</div>
                        </div>
                     </div>
                   </li>
@@ -432,38 +400,31 @@ const Sales = () => {
           </div>
 
           {/* Checkout Footer */}
-          <div className="flex flex-col gap-3 shrink-0 pt-2 border-t border-slate-50">
+          <div className="flex flex-col gap-2 shrink-0 pt-2 border-t border-slate-100">
             
             {/* Summary Box */}
-            <div className="bg-slate-50 rounded-xl p-3 border border-slate-100">
-               <div className="flex justify-between items-center mb-2 pb-2 border-b border-slate-200">
-                  <div>
-                    <p className="font-bold text-slate-800 text-xs">Jami: {cart.reduce((a,c)=>a+c.quantity,0)} ta</p>
-                  </div>
-                  <span className="font-bold text-slate-800 text-xs">{formatPrice(subtotal)}</span>
-               </div>
-               
+            <div className="bg-slate-50 rounded-lg p-3">
                <div className="space-y-1.5">
                  <div className="flex justify-between items-center text-xs">
-                   <span className="text-slate-500 font-medium">Subtotal:</span>
+                   <span className="text-slate-500">Jami ({cart.reduce((a,c)=>a+c.quantity,0)} ta):</span>
                    <span className="font-bold text-slate-700">{formatPrice(subtotal)}</span>
                  </div>
                  <div className="flex justify-between items-center text-xs">
-                   <span className="text-slate-500 font-medium">Chegirma:</span>
+                   <span className="text-slate-500">Chegirma:</span>
                    <input 
                      type="number" 
                      min="0" 
                      value={discount || ''} 
                      onChange={e => setDiscount(Number(e.target.value) || 0)} 
-                     className="w-20 px-2 py-1 bg-white border border-slate-200 rounded-md text-right font-bold text-slate-800 focus:ring-1 focus:ring-blue-500 outline-none transition-all" 
+                     className="w-20 px-2 py-1 bg-white border border-slate-200 rounded text-right font-bold text-slate-800 focus:ring-1 focus:ring-blue-500 outline-none transition-all" 
                      placeholder="0" 
                    />
                  </div>
                </div>
                
                <div className="flex justify-between items-end mt-2 pt-2 border-t border-slate-200">
-                  <span className="text-slate-800 font-black text-sm">Jami:</span>
-                  <span className="text-blue-600 font-black text-lg leading-none">{formatPrice(finalTotal)}</span>
+                  <span className="text-slate-800 font-bold text-sm">To'lov:</span>
+                  <span className="text-blue-600 font-bold text-lg leading-none">{formatPrice(finalTotal)}</span>
                </div>
             </div>
             
@@ -513,16 +474,12 @@ const Sales = () => {
             <button
               onClick={handleCheckout}
               disabled={cart.length === 0 || checkoutLoading}
-              className="w-full py-2.5 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white rounded-xl font-black text-sm transition-all shadow-md shadow-blue-500/30 disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none flex items-center justify-center gap-2 group"
+              className="w-full py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-bold text-sm transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
               {checkoutLoading ? (
                 <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
               ) : (
-                <>
-                  <ShoppingCart size={16} className="group-hover:-rotate-12 transition-transform" />
-                  Sotuvni yakunlash 
-                  <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-                </>
+                <>To'lov qilish</>
               )}
             </button>
           </div>

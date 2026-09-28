@@ -83,8 +83,8 @@ const Products = () => {
             </div>
             <input
               type="text"
-              placeholder="Qidirish..."
-              className="pl-10 pr-4 py-2 w-full border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Mahsulot qidirish..."
+              className="pl-10 pr-4 py-2 w-full bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
@@ -140,31 +140,31 @@ const Products = () => {
             <table className="w-full text-left border-collapse">
               <thead>
                 <tr className="bg-gray-50 border-b text-gray-600 text-sm">
-                  <th className="py-3 px-4 font-medium">#</th>
-                  <th className="py-3 px-4 font-medium">Mahsulot nomi</th>
-                  <th className="py-3 px-4 font-medium">Barcode</th>
-                  <th className="py-3 px-4 font-medium">Kategoriya</th>
-                  <th className="py-3 px-4 font-medium text-right">Xarid narxi</th>
-                  <th className="py-3 px-4 font-medium text-right">Sotuv narxi</th>
-                  <th className="py-3 px-4 font-medium text-right">Miqdor</th>
-                  <th className="py-3 px-4 font-medium center">Holat</th>
-                  <th className="py-3 px-4 font-medium text-center">Amallar</th>
+                  <th className="py-2.5 px-4 font-medium w-12">#</th>
+                  <th className="py-2.5 px-4 font-medium">Mahsulot nomi</th>
+                  <th className="py-2.5 px-4 font-medium">Kategoriya</th>
+                  <th className="py-2.5 px-4 font-medium text-right">Xarid narxi</th>
+                  <th className="py-2.5 px-4 font-medium text-right">Sotuv narxi</th>
+                  <th className="py-2.5 px-4 font-medium text-right w-24">Miqdor</th>
+                  <th className="py-2.5 px-4 font-medium text-center w-32">Holat</th>
+                  <th className="py-2.5 px-4 font-medium text-center w-24">Amallar</th>
                 </tr>
               </thead>
               <tbody className="divide-y text-sm">
                 {products.map((product, index) => (
                   <tr key={product.id} className="hover:bg-gray-50 transition-colors">
-                    <td className="py-3 px-4 text-gray-500">{index + 1}</td>
-                    <td className="py-3 px-4 font-medium text-gray-900">{product.name}</td>
-                    <td className="py-3 px-4 text-gray-500">{product.barcode || '-'}</td>
-                    <td className="py-3 px-4 text-gray-500">{product.category || '-'}</td>
-                    <td className="py-3 px-4 text-right text-gray-600">{formatPrice(product.purchasePrice)}</td>
-                    <td className="py-3 px-4 text-right text-gray-900 font-medium">{formatPrice(product.sellingPrice)}</td>
-                    <td className="py-3 px-4 text-right">{product.quantity}</td>
-                    <td className="py-3 px-4">
+                    <td className="py-2 px-4 text-gray-500">{index + 1}</td>
+                    <td className="py-2 px-4 font-semibold text-slate-800">{product.name}</td>
+                    <td className="py-2 px-4 text-slate-500 text-xs">
+                      {product.category ? <span className="bg-slate-100 px-2 py-0.5 rounded-md">{product.category}</span> : '-'}
+                    </td>
+                    <td className="py-2 px-4 text-right text-slate-500">{formatPrice(product.purchasePrice)}</td>
+                    <td className="py-2 px-4 text-right text-slate-900 font-bold">{formatPrice(product.sellingPrice)}</td>
+                    <td className="py-2 px-4 text-right font-bold text-slate-700">{product.quantity}</td>
+                    <td className="py-2 px-4 text-center">
                       <StockStatus quantity={product.quantity} minQuantity={product.minQuantity} />
                     </td>
-                    <td className="py-3 px-4">
+                    <td className="py-2 px-4">
                       {deleteConfirmId === product.id ? (
                         <div className="flex items-center justify-center gap-2">
                           <span className="text-xs text-red-600 font-medium">O'chirasizmi?</span>
@@ -194,8 +194,8 @@ const Products = () => {
               <div key={product.id} className="bg-white border rounded-lg p-4 shadow-sm">
                 <div className="flex justify-between items-start mb-2">
                   <div>
-                    <h3 className="font-medium text-gray-900">{product.name}</h3>
-                    {product.barcode && <p className="text-xs text-gray-500">{product.barcode}</p>}
+                    <h3 className="font-bold text-slate-800">{product.name}</h3>
+                    {product.category && <p className="text-[11px] font-semibold text-slate-500 bg-slate-100 px-2 py-0.5 rounded-md inline-block mt-1">{product.category}</p>}
                   </div>
                   <StockStatus quantity={product.quantity} minQuantity={product.minQuantity} />
                 </div>
