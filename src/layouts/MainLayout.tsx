@@ -108,14 +108,12 @@ const MainLayout: React.FC = () => {
   };
 
   const menuItems = [
-    { path: '/', name: 'Asosiy', icon: <LayoutDashboard size={20} /> },
-    { path: '/products', name: 'Mahsulotlar', icon: <Package size={20} /> },
     { path: '/sales', name: 'Sotuvlar', icon: <ShoppingCart size={20} /> },
+    { path: '/products', name: 'Mahsulotlar', icon: <Package size={20} /> },
     { path: '/customers', name: 'Mijozlar', icon: <Users size={20} /> },
-    { path: '/debts', name: 'Qarzdorlar', icon: <CreditCard size={20} /> },
+    { path: '/debts', name: 'Qarzdorlik', icon: <CreditCard size={20} /> },
     { path: '/expenses', name: 'Xarajatlar', icon: <Wallet size={20} /> },
     { path: '/reports', name: 'Hisobotlar', icon: <FileText size={20} /> },
-    { path: '/backup', name: 'Nusxalash', icon: <Database size={20} /> },
     { path: '/settings', name: 'Sozlamalar', icon: <Settings size={20} /> },
   ];
 
