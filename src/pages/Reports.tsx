@@ -8,15 +8,23 @@ import { reportService, type SalesReport, type ExpensesReport, type DebtReport, 
 import { Link } from 'react-router-dom';
 
 const Reports = () => {
+  // Helper to get local YYYY-MM-DD
+  const getLocalDateString = (d: Date) => {
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
+
   // State for Date Range
   const [startDate, setStartDate] = useState(() => {
     const d = new Date();
     d.setDate(1); // 1st of current month
-    return d.toISOString().split('T')[0];
+    return getLocalDateString(d);
   });
   
   const [endDate, setEndDate] = useState(() => {
-    return new Date().toISOString().split('T')[0];
+    return getLocalDateString(new Date());
   });
 
   const [dateError, setDateError] = useState('');
@@ -105,13 +113,19 @@ const Reports = () => {
         break;
     }
 
-    setStartDate(start.toISOString().split('T')[0]);
-    setEndDate(end.toISOString().split('T')[0]);
+    setStartDate(getLocalDateString(start));
+    setEndDate(getLocalDateString(end));
   };
 
   const formatPrice = (price: number) => new Intl.NumberFormat('uz-UZ').format(price) + ' so\'m';
 
-  const hasData = summary && (summary.salesCount > 0 || summary.expensesCount > 0 || summary.openDebt > 0);
+  const hasData = summary && (
+    summary.salesCount > 0 || 
+    summary.expensesCount > 0 || 
+    summary.openDebt > 0 ||
+    (paymentReport && paymentReport.paymentsCount > 0) ||
+    (debtReport && (debtReport.paidCount > 0 || debtReport.unpaidCount > 0 || debtReport.partialCount > 0))
+  );
 
   return (
     <div className="flex flex-col h-full space-y-6 p-4 sm:p-6 overflow-y-auto">
